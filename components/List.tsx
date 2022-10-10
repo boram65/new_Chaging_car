@@ -40,7 +40,7 @@ export default function Layout({ chaging }: ListProps) {
     <div className="mx-16">
       {chaging.map((e: allChaging, idx: any, chag: allChaging[]) => {
         return (
-          <div className="mt-2 inline-block">
+          <div className="mt-2 inline-block" key={idx}>
             {chag[idx].statNm !== chag[idx - 1]?.statNm ? (
               <div className="bg-red-200 inline-block">
                 <div className="text-xl font-bold bg-red-200">{e.statNm}</div>

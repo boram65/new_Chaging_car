@@ -4,7 +4,7 @@ import Image from "next/image";
 import { platform } from "os";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
-// import Map from "../components/Map";
+import Map from "../components/Map";
 import { useState } from "react";
 import { json } from "stream/consumers";
 import { allChaging } from "@prisma/client";
@@ -389,7 +389,7 @@ const Home: NextPage = () => {
           id="map"
           className="w-4/6 h-96  ml-5 bg-white rounded-2xl shadow-xl"
         >
-          {/* <Map latitude={lat} longitude={lon} /> */}
+          <Map latitude={lat} longitude={lon} />
         </div>
       </div>
       <div>{리스트출력()}</div>

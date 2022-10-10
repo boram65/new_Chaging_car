@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// model SiDo {
+//   id       String   @id @default(uuid()) @map("_id")
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+
+//   zcode   Int       @unique
+//   SiGunGu SiGunGu[]
+// }
+
+// model SiGunGu {
+//   id       String   @id @default(uuid()) @map("_id")
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+
+//   SiDo        SiDo          @relation(fields: [SiDoZcode], references: [zcode])
+//   SiDoZcode   Int
+//   zscode      Int           @unique
+//   ChagingStat ChagingStat[]
+// }
+
+// model ChagingStat {
+//   id       String   @id @default(uuid()) @map("_id")
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+
+//   SiGunGu       SiGunGu   @relation(fields: [SiGunGuZscode], references: [zscode])
+//   SiGunGuZscode Int
+//   statNm        String
+//   statId        String    @unique
+//   addr          String
+//   lat           Float
+//   lng           Float
+//   parkingFree   String
+//   limitDetail   String?   @default("제한 없음")
+//   ChgerId       ChgerId[]
+// }
+
+// model ChgerId {
+//   id       String   @id @default(uuid()) @map("_id")
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+
+//   ChagingStat   ChagingStat @relation(fields: [ChagingStatId], references: [statId])
+//   ChagingStatId String
+//   chgerId       String
+//   lastTsdt      String?
+//   lastTedt      String?
+//   stat          Int
+//   chgerType     String
+// }
+
+// model aryAllChaging {
+//   id String @id @default(uuid()) @map("_id")
+
+// }
+
+model allChaging {
+  id String @id @default(uuid()) @map("_id")
+
+  statNm      String //이름
+  statId      String //충전소 아이디
+  chgerId     String //충전소 코드 아이디
+  chgerType   String //충전타입
+  addr        String //주소
+  lat         String //위도
+  lng         String //경도
+  stat        String //충전기 상태 (1 통신이상 2충전대기 3충전중 4운영중지 5점검중 9상태미확인)
+  lastTsdt    String //마지막충전시작
+  lastTedt    String //마지막 충전종료
+  zcode       String //시도
+  zscode      String //시군구
+  kind        String //충전소 구분코드 
+  kindDetail  String //상세 충전소 구분코드
+  parkingFree String //무료 주차 여부
+  limitYn     String //이용자 제한
+  limitDetail String? @default("제한 없음") //이용자 제한 사유
+}

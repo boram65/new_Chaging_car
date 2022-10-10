@@ -18,7 +18,6 @@ const Home: NextPage = () => {
       const { lat, lng } = json.location;
       setLat(lat);
       setLon(lng);
-      console.log("gd");
     });
 
   return (

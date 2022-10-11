@@ -74,8 +74,8 @@ model allChaging {
   chgerId     String //충전소 코드 아이디
   chgerType   String //충전타입
   addr        String //주소
-  lat         String //위도
-  lng         String //경도
+  lat         Float //위도
+  lng         Float //경도
   stat        String //충전기 상태 (1 통신이상 2충전대기 3충전중 4운영중지 5점검중 9상태미확인)
   lastTsdt    String //마지막충전시작
   lastTedt    String //마지막 충전종료

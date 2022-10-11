@@ -31,6 +31,19 @@ const Auto: NextPage = () => {
     coordinates: { lat: 36.8002, lng: 127.075 },
   });
 
+  const post = () => {
+    const lat_lng = { Lat, Lon };
+
+    fetch("api/latlng", {
+      method: "POST",
+      body: JSON.stringify(lat_lng),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+      });
+  };
+
   // 성공에 대한 로직
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
@@ -42,6 +55,8 @@ const Auto: NextPage = () => {
         lng: location.coords.longitude,
       },
     });
+    setLat(location.coords.latitude);
+    setLon(location.coords.longitude);
   };
 
   // 에러에 대한 로직
@@ -62,17 +77,16 @@ const Auto: NextPage = () => {
       });
     }
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    post();
   }, []);
 
   return (
     <div>
       <Layout />
-      <div className="bg-yellow-300 mt-24 py-5">
-        <div id="map" className="w-4/6 h-96  ml-5 bg-white">
-          <Map
-            latitude={Number(location.coordinates?.lat)}
-            longitude={Number(location.coordinates?.lng)}
-          />
+      <div className="mt-24"></div>
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5">
+        <div id="map" className="w-4/6 ml-5 bg-white rounded-2xl shadow-xl">
+          <Map latitude={Lat} longitude={Lon} />
         </div>
       </div>
     </div>

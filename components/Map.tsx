@@ -20,6 +20,7 @@ function Map({ latitude, longitude }: MapProps) {
         const container = document.getElementById("map");
         const options = {
           center: new window.kakao.maps.LatLng(latitude, longitude),
+          level: 5,
         };
         const map = new window.kakao.maps.Map(container, options);
         const markerPosition = new window.kakao.maps.LatLng(

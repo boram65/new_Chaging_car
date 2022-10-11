@@ -10,31 +10,13 @@ type Data = {
   newAllChag?: allChaging;
 };
 
-// export interface item {
-//   statNm: string;
-//   statId: string;
-//   chgerId: string;
-//   chgerType: string;
-//   addr: string;
-//   lat: string;
-//   lng: string;
-//   stat: string;
-//   lastTsdt: string;
-//   lastTedt: string;
-//   zcode: string;
-//   zscode: string;
-//   kind: string;
-//   kindDetail: string;
-//   parkingFree: string;
-//   limitYn: string;
-//   limitDetail: string;
-// }
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   try {
+    //const alldelete = await client.allChaging.deleteMany({});
+
     for (let i = 0; i < 15; i++) {
       let vel: any = [];
       fetch(
@@ -70,8 +52,8 @@ export default async function handler(
                 chgerId,
                 chgerType,
                 addr,
-                lat,
-                lng,
+                lat: Number(lat),
+                lng: Number(lng),
                 stat,
                 lastTsdt,
                 lastTedt,

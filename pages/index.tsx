@@ -343,7 +343,7 @@ const Home: NextPage = () => {
 
   const 지역코드req = () => {
     if (finalcode === "00000") return;
-    fetch(`api/${finalcode}`, { method: "POST" })
+    fetch(`api/id/${finalcode}`, { method: "POST" })
       .then(res => res.json())
       .then(json => {
         setChaging(json.newChaging);
@@ -360,8 +360,8 @@ const Home: NextPage = () => {
   return (
     <div>
       <Layout />
-      <div className=" mt-8">
-        <select className="w-40 h-8 bg-gray-100 ml-5" onChange={시도선택}>
+      <div className=" mt-10">
+        <select className="w-40 h-8 bg-gray-100 ml-5 mb-1" onChange={시도선택}>
           <option>시,도</option>
           {sido.map((e, idx) => (
             <option key={idx} value={e.code}>
@@ -369,7 +369,10 @@ const Home: NextPage = () => {
             </option>
           ))}
         </select>
-        <select className="w-40 h-8 bg-gray-100 ml-5" onChange={지역코드반환}>
+        <select
+          className="w-40 h-8 bg-gray-100 ml-5 mb-1"
+          onChange={지역코드반환}
+        >
           <option>시,군,구</option>
           {sigungu.map((e, idx) => (
             <option key={idx} value={e.code}>

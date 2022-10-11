@@ -12,27 +12,27 @@ const Home: NextPage = () => {
   const [lat, setLat] = useState(36.8002);
   const [lon, setLon] = useState(127.075);
 
-  // fetch("/api/gps")
-  //   .then(res => res.json())
-  //   .then(json => {
-  //     const { lat, lng } = json.location;
-  //     console.log(lat, lng);
-  //     setLat(lat);
-  //     setLon(lng);
-  //   });
-
-  if (navigator.geolocation) {
-    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-    navigator.geolocation.getCurrentPosition(function (position) {
-      var lat = position.coords.latitude, // 위도
-        lon = position.coords.longitude; // 경도
-
-      console.log(lat);
-      console.log(lon);
+  fetch("/api/gps")
+    .then(res => res.json())
+    .then(json => {
+      const { lat, lng } = json.location;
+      console.log(lat, lng);
       setLat(lat);
-      setLon(lon);
+      setLon(lng);
     });
-  }
+
+  // if (navigator.geolocation) {
+  //   // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+  //   navigator.geolocation.getCurrentPosition(function (position) {
+  //     var lat = position.coords.latitude, // 위도
+  //       lon = position.coords.longitude; // 경도
+
+  //     console.log(lat);
+  //     console.log(lon);
+  //     setLat(lat);
+  //     setLon(lon);
+  //   });
+  // }
 
   return (
     <div>

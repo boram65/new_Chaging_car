@@ -14,21 +14,10 @@ interface locationType {
   error?: { code: number; message: string };
 }
 
-const Auto: NextPage = () => {
-  const [Lat, setLat] = useState(36.8002);
-  const [Lon, setLon] = useState(127.075);
-
-  // fetch("/api/gps")
-  //   .then(res => res.json())
-  //   .then(json => {
-  //     const { lat, lng } = json.location;
-  //     console.log(lat, lng);
-  //     setLat(lat);
-  //     setLon(lng);
-  //   });
+const useGeolocation: NextPage = () => {
   const [location, setLocation] = useState<locationType>({
     loaded: false,
-    coordinates: { lat: 36.8002, lng: 127.075 },
+    coordinates: { lat: 0, lng: 0 },
   });
 
   // 성공에 대한 로직
@@ -63,20 +52,15 @@ const Auto: NextPage = () => {
     }
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
+  console.log(location);
 
   return (
     <div>
-      <Layout />
-      <div className="bg-yellow-300 mt-24 py-5">
-        <div id="map" className="w-4/6 h-96  ml-5 bg-white">
-          <Map
-            latitude={Number(location.coordinates?.lat)}
-            longitude={Number(location.coordinates?.lng)}
-          />
-        </div>
+      <div>
+        위도 : {} 경도 : {}
       </div>
     </div>
   );
 };
 
-export default Auto;
+export default useGeolocation;

@@ -384,11 +384,8 @@ const Home: NextPage = () => {
           검색
         </button>
       </div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-yellow-400 mt-5 py-5">
-        <div
-          id="map"
-          className="w-4/6 h-96  ml-5 bg-white rounded-2xl shadow-xl"
-        >
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5">
+        <div id="map" className="w-4/6   ml-5 bg-white rounded-2xl shadow-xl">
           <Map latitude={lat} longitude={lon} />
         </div>
       </div>

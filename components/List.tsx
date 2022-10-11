@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { platform } from "os";
 import styles from "../styles/Home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { allChaging } from "@prisma/client";
 
@@ -30,9 +30,191 @@ const chgChgerType = (type: String) => {
       return "AC3상";
   }
 };
+const kind = (ele: String) => {
+  switch (ele) {
+    case "A0":
+      return "공공시설";
+    case "B0":
+      return "주차시설";
+    case "C0":
+      return "휴게시설";
+    case "D0":
+      return "관광시설";
+    case "E0":
+      return "상업시설";
+    case "F0":
+      return "차량정비시설";
+    case "G0":
+      return "기타시설";
+    case "H0":
+      return "공동주택시설";
+    case "I0":
+      return "근린생활시설";
+    case "J0":
+      return "교육문화시설";
+  }
+};
+
+const kindD = (ele: String) => {
+  switch (ele) {
+    case "A001":
+      return "관공서";
+    case "A002":
+      return "주민센터";
+    case "A003":
+      return "공공기관";
+    case "A004":
+      return "지자체시설";
+    case "B001":
+      return "공영주차장";
+    case "B002":
+      return "공원주차장";
+    case "B003":
+      return "환승주차장";
+    case "B004":
+      return "일반주차장";
+    case "C001":
+      return "고속도로 휴게소";
+    case "C002":
+      return "지방도로 휴게소";
+    case "C003":
+      return "쉼터";
+    case "D001":
+      return "공원";
+    case "D002":
+      return "전시관";
+    case "D003":
+      return "민속마을";
+    case "D004":
+      return "생태공원";
+    case "D005":
+      return "홍보관";
+    case "D006":
+      return "관광안내소";
+    case "D007":
+      return "관광지";
+    case "D008":
+      return "박물관";
+    case "D009":
+      return "유적지";
+    case "E001":
+      return "마트(쇼핑몰)";
+    case "E002":
+      return "백화점";
+    case "E003":
+      return "숙박시설";
+    case "E004":
+      return "골프장(cc)";
+    case "E005":
+      return "카페";
+    case "E006":
+      return "음식점";
+    case "E007":
+      return "주유소";
+    case "E008":
+      return "영화관";
+    case "F001":
+      return "서비스센터";
+    case "F002":
+      return "정비소";
+    case "G001":
+      return "군부대";
+    case "G002":
+      return "야영장";
+    case "G003":
+      return "공중전화부스";
+    case "G004":
+      return "기타";
+    case "G005":
+      return "오피스텔";
+    case "G006":
+      return "단독주택";
+    case "H001":
+      return "아파트";
+    case "H002":
+      return "빌라";
+    case "H003":
+      return "사업장(사옥)";
+    case "H004":
+      return "기숙사";
+    case "H005":
+      return "연립주택";
+    case "I001":
+      return "병원";
+    case "I002":
+      return "종교시설";
+    case "I003":
+      return "보건소";
+    case "I004":
+      return "경찰서";
+    case "I005":
+      return "도서관";
+    case "I006":
+      return "복지관";
+    case "I007":
+      return "수련원";
+    case "I008":
+      return "금융기관";
+    case "J001":
+      return "학교";
+    case "J002":
+      return "교육원";
+    case "J003":
+      return "학원";
+    case "J004":
+      return "공연장";
+    case "J005":
+      return "관람장";
+    case "J006":
+      return "동식물원";
+    case "J007":
+      return "경기장";
+  }
+};
 const chgLimitYn = (limit: String) => {
   if (limit === "Y") return "충전이용 제한 !";
   else return "이용제한 없음";
+};
+// (1 통신이상 2충전대기 3충전중 4운영중지 5점검중 9상태미확인)
+const stat = (ele: String) => {
+  switch (ele) {
+    case "1":
+      return "통신이상 🔴";
+    case "2":
+      return "충전대기 🟢";
+    case "3":
+      return "충전중 🔵";
+    case "4":
+      return "운영중지 ⚫️";
+    case "5":
+      return "점검중 🔴";
+    case "9":
+      return "상태미확인 🟠";
+  }
+};
+
+const date = (ele: String) => {
+  const year = ele.substring(0, 4);
+  const month = ele.substring(4, 6);
+  const day = ele.substring(6, 8);
+  const hour = ele.substring(8, 10);
+  const minute = ele.substring(10, 12);
+  const second = ele.substring(12, 14);
+
+  return (
+    year +
+    "년" +
+    month +
+    "월" +
+    day +
+    "일" +
+    hour +
+    "시" +
+    minute +
+    "분" +
+    second +
+    "초"
+  );
 };
 
 export default function Layout({ chaging }: ListProps) {
@@ -40,18 +222,64 @@ export default function Layout({ chaging }: ListProps) {
     <div className="mx-16">
       {chaging.map((e: allChaging, idx: any, chag: allChaging[]) => {
         return (
-          <div className="mt-2 inline-block" key={idx}>
-            {chag[idx].statNm !== chag[idx - 1]?.statNm ? (
-              <div className="bg-red-200 inline-block">
-                <div className="text-xl font-bold bg-red-200">{e.statNm}</div>
+          <div className="flex items-center mt-10" key={idx}>
+            <div>
+              <button className="text-3xl border w-12 h-12">⭐️</button>
+            </div>
+            <div className="w-5/6 h-60 rounded-xl bg-gradient-to-r bg-lime-300 from-yellow-300 shadow-lg">
+              <div className="flex justify-between items-center">
+                <div className="text-2xl font-bold ml-5 mt-2 text-gray-700">
+                  {e.statNm}
+                </div>
+                <div className="text-base mr-5 mt-2 font-bold text-gray-700 bg-teal-100 px-2 rounded-2xl shadow-2xl border border-gray-700">
+                  {chgChgerType(e.chgerType)}
+                </div>
               </div>
-            ) : null}
-            <div className="bg-yellow-300 m-5">
-              <div>주소 : {e.statNm}</div>
-              <div>코드id : {e.chgerId}</div>
-              <div>충전소 : {e.statId}</div>
+              <div className="mx-5 my-2  flex justify-between">
+                <div className="font-bold text-gray-700 text-lg">{e.addr}</div>
+                <div>
+                  {kind(e.kind)} ({kindD(e.kindDetail)})
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="text-lg ml-5">
+                  무료 주차: {e.parkingFree === "Y" ? "🟢" : "🔴"}
+                </div>
+                <div className="mr-5 my-2 text-xl bg-white p-1 rounded-2xl shadow-2xl border-2 border-cyan-500">
+                  {stat(e.stat)}
+                </div>
+              </div>
+
+              <div className="mx-5 flex justify-between">
+                <div className="text-red-600 font-bold">
+                  {e.limitYn === "N" ? null : e.limitDetail}
+                </div>
+              </div>
+              <div className="mt-5">
+                <div className="flex justify-between items-center mx-5">
+                  <div>마지막 충전 시작일시</div>
+                  <div>마지막 충전 종료일시</div>
+                </div>
+                <div className="flex justify-between items-center mx-5">
+                  <div>{date(e.lastTsdt)}</div>
+                  <div>{date(e.lastTedt)}</div>
+                </div>
+              </div>
             </div>
           </div>
+          // <div className="mt-2 w-full" key={idx}>
+          //   {chag[idx].statNm !== chag[idx - 1]?.statNm ? (
+          //     <div className="bg-red-200">
+          //       <div className="text-xl font-bold bg-red-200">{e.statNm}</div>
+          //     </div>
+          //   ) : null}
+
+          //   <div className="bg-yellows-300 m-5 h-44 w-44">
+          //     <div>주소 : {e.statNm}</div>
+          //     <div>코드id : {e.chgerId}</div>
+          //     <div>충전소 : {e.statId}</div>
+          //   </div>
+          // </div>
         );
       })}
     </div>

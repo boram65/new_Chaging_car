@@ -11,10 +11,13 @@ import { allChaging } from "@prisma/client";
 import List from "../components/List";
 
 const Home: NextPage = () => {
-  const [lat, setLat] = useState(36.8002);
-  const [lon, setLon] = useState(127.075);
+  const [lat, setLat] = useState([36.8002]);
+  const [lon, setLon] = useState([127.075]);
   const [finalcode, setFinalcode] = useState("00000");
   const [chaging, setChaging] = useState<allChaging[]>([]);
+  const [llat, setllat] = useState<Number[]>([]); //주변 충전소의 좌표
+  const [llng, setllng] = useState<Number[]>([]); //주변 충전소의 죄표
+  const [ready, setReady] = useState(false);
   const [sido, setSido] = useState([
     { name: "서울특별시", code: "11" },
     { name: "부산광역시", code: "26" },
@@ -347,6 +350,14 @@ const Home: NextPage = () => {
       .then(res => res.json())
       .then(json => {
         setChaging(json.newChaging);
+        //충전소 위치를 배열로 저장
+        setllat([]);
+        setllng([]);
+        json.newChaging.map((e: allChaging, idx: any) => {
+          setllat(llat => [...llat, e.lat]);
+          setllng(llng => [...llng, e.lng]);
+        });
+        setReady(true);
       });
   };
 
@@ -390,6 +401,10 @@ const Home: NextPage = () => {
       <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5">
         <div id="map" className="w-4/6   ml-5 bg-white rounded-2xl shadow-xl">
           {/* <Map latitude={lat} longitude={lon} /> */}
+          <Map
+            latitude={ready === false ? lat : llat}
+            longitude={ready === false ? lon : llng}
+          />
         </div>
       </div>
       <div>{리스트출력()}</div>

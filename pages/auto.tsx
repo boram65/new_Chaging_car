@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { json } from "stream/consumers";
 import { allChaging } from "@prisma/client";
 import List from "../components/List";
+import Loading from "../components/Loading";
 
 interface locationType {
   loaded: boolean;
@@ -51,10 +52,9 @@ const Auto: NextPage = () => {
         //충전소 위치를 배열로 저장
         json.alldata?.map((e: allChaging, idx: any) => {
           setllat(llat => [...llat, e.lat]);
-        });
-        json.alldata?.map((e: allChaging, idx: any) => {
           setllng(llng => [...llng, e.lng]);
         });
+
         setReady(true);
       });
   };
@@ -102,7 +102,7 @@ const Auto: NextPage = () => {
   };
 
   return !ready ? (
-    <div className="flex justify-center items-center text-4xl">로딩중</div>
+    <Loading />
   ) : (
     <div>
       <Layout />

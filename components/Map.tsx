@@ -2,12 +2,31 @@ import styled from "@emotion/styled";
 import { useEffect } from "react";
 
 interface MapProps {
-  latitude: number;
-  longitude: number;
+  mylat: Number;
+  mylng: Number;
+  latitude: Number[];
+  longitude: Number[];
 }
 
-function Map({ latitude, longitude }: MapProps) {
+function Map({ mylat, mylng, latitude, longitude }: MapProps) {
   useEffect(() => {
+    console.log(
+      "Map 컴포넌트호출 = mylat : " +
+        mylat +
+        " ary : " +
+        latitude +
+        "길이 : " +
+        latitude.length
+    );
+    console.log(
+      "Map 컴포넌트호출 = mylog : " +
+        mylng +
+        " ary : " +
+        longitude +
+        "길이 : " +
+        longitude.length
+    );
+
     const mapScript = document.createElement("script");
 
     mapScript.async = true;
@@ -19,14 +38,11 @@ function Map({ latitude, longitude }: MapProps) {
       window.kakao.maps.load(() => {
         const container = document.getElementById("map");
         const options = {
-          center: new window.kakao.maps.LatLng(latitude, longitude),
+          center: new window.kakao.maps.LatLng(mylat, mylng),
           level: 5,
         };
         const map = new window.kakao.maps.Map(container, options);
-        const markerPosition = new window.kakao.maps.LatLng(
-          latitude,
-          longitude
-        );
+        const markerPosition = new window.kakao.maps.LatLng(mylat, mylng);
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
         });
@@ -36,7 +52,7 @@ function Map({ latitude, longitude }: MapProps) {
     mapScript.addEventListener("load", onLoadKakaoMap);
 
     return () => mapScript.removeEventListener("load", onLoadKakaoMap);
-  }, [latitude, longitude]);
+  }, [mylat, mylng]);
 
   return <MapContainer id="map" />;
 }

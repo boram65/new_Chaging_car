@@ -30,10 +30,10 @@ export default async function handler(
     let tempLat = Lat.toString().substring(0, 5);
     let tempLng = Lon.toString().substring(0, 6);
 
-    let upLat = Number(tempLat) + 0.05;
-    let doLat = Number(tempLat) - 0.05;
-    let upLng = Number(tempLng) + 0.06;
-    let doLng = Number(tempLng) - 0.06;
+    let upLat = Number(tempLat) + 0.01;
+    let doLat = Number(tempLat) - 0.01;
+    let upLng = Number(tempLng) + 0.02;
+    let doLng = Number(tempLng) - 0.02;
 
     upLat = Number(upLat.toFixed(2));
     doLat = Number(doLat.toFixed(2));
@@ -62,6 +62,7 @@ export default async function handler(
         ],
       },
     });
+    console.log(alldata.length);
 
     // console.log(alldata);
     // console.log("upLat : " + upLat);

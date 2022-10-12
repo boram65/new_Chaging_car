@@ -7,6 +7,8 @@ import Layout from "../components/Layout";
 import Map from "../components/Map";
 import { useState, useEffect } from "react";
 import { json } from "stream/consumers";
+import { allChaging } from "@prisma/client";
+import List from "../components/List";
 
 interface locationType {
   loaded: boolean;
@@ -15,9 +17,12 @@ interface locationType {
 }
 
 const Auto: NextPage = () => {
-  const [Lat, setLat] = useState(36.8002);
-  const [Lon, setLon] = useState(127.075);
-
+  const [Lat, setLat] = useState(36.8002); //자신의 위치정보
+  const [Lon, setLon] = useState(127.075); //자신의 위치정보
+  const [chaging, setChaging] = useState<allChaging[]>([]); //주변 충전소 정보
+  //map 한테 보낼 자신의 위치정보 + 주면 충전소 위치정보
+  const [llat, setllat] = useState<Number[]>([]); //주변 충전소의 좌표
+  const [llng, setllng] = useState<Number[]>([]); //주변 충전소의 죄표
   // fetch("/api/gps")
   //   .then(res => res.json())
   //   .then(json => {
@@ -30,8 +35,10 @@ const Auto: NextPage = () => {
     loaded: false,
     coordinates: { lat: 36.8002, lng: 127.075 },
   });
+  const [ready, setReady] = useState(false);
 
   const post = () => {
+    //자신의 위치정보를 보내 주변 충전소를 가져옴
     const lat_lng = { Lat, Lon };
 
     fetch("api/latlng", {
@@ -40,10 +47,17 @@ const Auto: NextPage = () => {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        setChaging(json.alldata);
+        //충전소 위치를 배열로 저장
+        json.alldata?.map((e: allChaging, idx: any) => {
+          setllat(llat => [...llat, e.lat]);
+        });
+        json.alldata?.map((e: allChaging, idx: any) => {
+          setllng(llng => [...llng, e.lng]);
+        });
+        setReady(true);
       });
   };
-
   // 성공에 대한 로직
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
@@ -80,15 +94,25 @@ const Auto: NextPage = () => {
     post();
   }, []);
 
-  return (
+  const 리스트출력 = () => {
+    if (chaging.length === 0) return;
+    else {
+      return <List chaging={chaging} />;
+    }
+  };
+
+  return !ready ? (
+    <div className="flex justify-center items-center text-4xl">로딩중</div>
+  ) : (
     <div>
       <Layout />
       <div className="mt-24"></div>
       <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5">
         <div id="map" className="w-4/6 ml-5 bg-white rounded-2xl shadow-xl">
-          <Map latitude={Lat} longitude={Lon} />
+          <Map mylat={Lat} mylng={Lon} latitude={llat} longitude={llng} />
         </div>
       </div>
+      <div>{리스트출력()}</div>
     </div>
   );
 };

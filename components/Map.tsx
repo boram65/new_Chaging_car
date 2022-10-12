@@ -50,15 +50,16 @@ function Map({ mylat, mylng, latitude, longitude }: MapProps) {
 
         //마커 이미지
         var imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-        var imageSize = new window.kakao.maps.Size(24, 35);
+          "https://cdn.icon-icons.com/icons2/2102/PNG/512/battery_energy_charger_charging_electric_station_tesla_icon_129004.png";
+        var imageSize = new window.kakao.maps.Size(30);
         var markerImage = new window.kakao.maps.MarkerImage(
           imageSrc,
           imageSize
         );
         //만약 선택 화면이면 my마커는 없고 기존 좌표로 마커만 찍기
         if (!mylat) {
-          console.log("선택화면임");
+          //선택화면
+
           for (let i = 0; i < latitude.length; i++) {
             const myMarkerPosition = new window.kakao.maps.LatLng(
               !mylat ? latitude[i] : mylat,
@@ -67,13 +68,13 @@ function Map({ mylat, mylng, latitude, longitude }: MapProps) {
             //마커 만들기
             const marker = new window.kakao.maps.Marker({
               position: myMarkerPosition,
-              image: markerImage,
+              image: latitude.length === 1 ? null : markerImage,
             });
 
             marker.setMap(map);
           }
         } else {
-          console.log("자동임");
+          //자동화면
           //내 마커
           const myMarkerPosition = new window.kakao.maps.LatLng(mylat, mylng);
           //내마커 만들기

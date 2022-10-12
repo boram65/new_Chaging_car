@@ -5,10 +5,11 @@ import { platform } from "os";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 import Map from "../components/Map";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { json } from "stream/consumers";
 import { allChaging } from "@prisma/client";
 import List from "../components/List";
+import Loading from "../components/Loading";
 
 const Home: NextPage = () => {
   const [lat, setLat] = useState([36.8002]);
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
   const [llat, setllat] = useState<Number[]>([]); //주변 충전소의 좌표
   const [llng, setllng] = useState<Number[]>([]); //주변 충전소의 죄표
   const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [sido, setSido] = useState([
     { name: "서울특별시", code: "11" },
     { name: "부산광역시", code: "26" },
@@ -345,6 +347,7 @@ const Home: NextPage = () => {
   };
 
   const 지역코드req = () => {
+    setLoading(true);
     if (finalcode === "00000") return;
     fetch(`api/id/${finalcode}`, { method: "POST" })
       .then(res => res.json())
@@ -358,6 +361,9 @@ const Home: NextPage = () => {
           setllng(llng => [...llng, e.lng]);
         });
         setReady(true);
+      })
+      .then(() => {
+        setLoading(false);
       });
   };
 
@@ -368,7 +374,7 @@ const Home: NextPage = () => {
     }
   };
 
-  return (
+  return !loading ? (
     <div>
       <Layout />
       <div className=" mt-10">
@@ -398,9 +404,8 @@ const Home: NextPage = () => {
           검색
         </button>
       </div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5">
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 flex">
         <div id="map" className="w-4/6   ml-5 bg-white rounded-2xl shadow-xl">
-          {/* <Map latitude={lat} longitude={lon} /> */}
           <Map
             latitude={ready === false ? lat : llat}
             longitude={ready === false ? lon : llng}
@@ -409,6 +414,8 @@ const Home: NextPage = () => {
       </div>
       <div>{리스트출력()}</div>
     </div>
+  ) : (
+    <Loading />
   );
 };
 

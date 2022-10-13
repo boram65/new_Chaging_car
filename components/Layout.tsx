@@ -5,6 +5,7 @@ import { platform } from "os";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import Link from "next/link";
+import Logo from "./Logo";
 
 interface LayoutProps {
   title: String;
@@ -16,10 +17,11 @@ export default function Layout() {
 
   return (
     <div>
+      <div className="flex justify-center"></div>
       <div className="bg-yellow-300">
         <div className="flex justify-around">
           <Link href={"/"}>
-            <button className="font-bold text-2xl w-full h-20 border-r border-gray-300 hover:bg-yellow-400 flex justify-center items-center">
+            <button className="font-bold text-xl w-full h-20  hover:bg-yellow-400 flex justify-center items-center shadow-inner">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -42,8 +44,9 @@ export default function Layout() {
               선택위치검색
             </button>
           </Link>
+          <Logo />
           <Link href={"/auto"}>
-            <button className="font-bold text-2xl w-full h-20 border-l border-gray-300 hover:bg-yellow-400 flex justify-center items-center">
+            <button className="font-bold text-xl w-full h-20 hover:bg-yellow-400 flex justify-center items-center shadow-inner ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

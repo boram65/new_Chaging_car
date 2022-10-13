@@ -406,7 +406,7 @@ const Home: NextPage = () => {
           검색
         </button>
       </div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 mx-5 py-5 h-[30rem] flex justify-center rounded-2xl">
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 h-[30rem] flex justify-center">
         <div
           id="map"
           className="w-10/12 h-full my-0 bg-white rounded-2xl shadow-xl"

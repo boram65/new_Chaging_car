@@ -10,6 +10,7 @@ import { json } from "stream/consumers";
 import { allChaging } from "@prisma/client";
 import List from "../components/List";
 import Loading from "../components/Loading";
+import DBupDate from "../components/DBupDate";
 
 interface locationType {
   loaded: boolean;
@@ -105,6 +106,7 @@ const Auto: NextPage = () => {
     <Loading />
   ) : (
     <div>
+      <DBupDate />
       <Layout />
       <div className="mt-24"></div>
       <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 h-[30rem] flex justify-center">
@@ -115,7 +117,7 @@ const Auto: NextPage = () => {
           <Map mylat={Lat} mylng={Lon} latitude={llat} longitude={llng} />
         </div>
       </div>
-      <div>{리스트출력()}</div>
+      <div className="flex justify-center">{리스트출력()}</div>
     </div>
   );
 };

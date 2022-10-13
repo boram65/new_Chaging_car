@@ -205,68 +205,82 @@ const date = (ele: String) => {
   const minute = ele.substring(10, 12);
   const second = ele.substring(12, 14);
 
-  return (
-    year +
-    "년" +
-    month +
-    "월" +
-    day +
-    "일" +
-    hour +
-    "시" +
-    minute +
-    "분" +
-    second +
-    "초"
-  );
+  return year + "년" + month + "월" + day + "일";
+};
+
+const time = (ele: String) => {
+  if (ele === "") {
+    return "";
+  }
+  const hour = ele.substring(8, 10);
+  const minute = ele.substring(10, 12);
+  const second = ele.substring(12, 14);
+
+  return hour + " : " + minute + " : " + second;
 };
 
 export default function Layout({ chaging }: ListProps) {
   return (
-    <div className="mx-16">
+    <div className="w-11/12 flex flex-wrap justify-center">
       {chaging.map((e: allChaging, idx: any, chag: allChaging[]) => {
         return (
-          <div className="flex items-center mt-10" key={idx}>
+          <div className="flex items-center mt-10 w-5/12" key={idx}>
             <div>
-              <button className="text-3xl border w-12 h-12">⭐️</button>
+              <button className="text-3xl w-12 h-12">⭐️</button>
             </div>
-            <div className="w-5/6 h-60 rounded-xl bg-gradient-to-r bg-lime-300 from-yellow-300 shadow-lg">
+            <div className="w-5/6 h-72 rounded-xl bg-gradient-to-r bg-lime-300 from-yellow-300 shadow-xl">
               <div className="flex justify-between items-center">
-                <div className="text-2xl font-bold ml-5 mt-2 text-gray-700">
+                <div className="text-xl font-bold ml-5 mt-2 text-gray-700">
                   {e.statNm}
                 </div>
-                <div className="text-base mr-5 mt-2 font-bold text-gray-700 bg-teal-100 px-2 rounded-2xl shadow-2xl border border-gray-700">
+                <div className="text-sm mr-5 mt-2 font-bold text-gray-700 bg-teal-100 px-2 rounded-2xl shadow-2xl border border-gray-700 ">
                   {chgChgerType(e.chgerType)}
                 </div>
               </div>
-              <div className="mx-5 my-2  flex justify-between">
-                <div className="font-bold text-gray-700 text-lg">{e.addr}</div>
+              <div className="mx-5 my-2 ">
+                <div className="font-bold text-gray-700 text-base">
+                  {e.addr}
+                </div>
                 <div>
                   {kind(e.kind)} ({kindD(e.kindDetail)})
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <div className="text-lg ml-5">
+                <div className="text-base ml-5">
                   무료 주차: {e.parkingFree === "Y" ? "🟢" : "🔴"}
                 </div>
-                <div className="mr-5 my-2 text-xl bg-white p-1 rounded-2xl shadow-2xl border-2 border-cyan-500">
+                <div className="mr-5 my-2 text-lg bg-white p-1 rounded-2xl shadow-2xl border-2 border-cyan-500">
                   {stat(e.stat)}
                 </div>
               </div>
 
               <div className="mx-5 flex justify-between">
-                <div className="text-red-600 font-bold">
-                  {e.limitYn === "N" ? null : e.limitDetail}
+                <div className="text-red-600 font-bold text-sm">
+                  {e.limitYn === "N" ? " " : e.limitDetail}
                 </div>
               </div>
-              <div className="mt-5">
-                <div className="flex justify-between items-center mx-5">
-                  <div>마지막 충전 시작일시</div>
-                  <div>마지막 충전 종료일시</div>
+              <div className="mt-2 flex justify-between">
+                <div className=" items-center mx-5 border border-black rounded-lg p-1">
+                  <div className="flex justify-center text-sm">
+                    마지막 충전 시작
+                  </div>
+                  <div className="flex justify-center text-sm">
+                    {date(e.lastTsdt)}
+                  </div>
+                  <div className="flex justify-center text-sm">
+                    {time(e.lastTsdt)}
+                  </div>
                 </div>
-                <div className="flex justify-between items-center mx-5">
-                  <div>{date(e.lastTsdt)}</div>
-                  <div>{date(e.lastTedt)}</div>
+                <div className=" items-center mx-5 border border-black rounded-lg p-1">
+                  <div className="flex justify-center text-sm">
+                    마지막 충전 종료
+                  </div>
+                  <div className="flex justify-center text-sm">
+                    {date(e.lastTedt)}
+                  </div>
+                  <div className="flex justify-center text-sm">
+                    {time(e.lastTedt)}
+                  </div>
                 </div>
               </div>
             </div>

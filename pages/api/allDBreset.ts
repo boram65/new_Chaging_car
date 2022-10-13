@@ -15,7 +15,15 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    //const alldelete = await client.allChaging.deleteMany({});
+    const alldelete = await client.allChaging.deleteMany({});
+    const tempTime = new Date();
+    const nowYear = tempTime.getFullYear();
+    const nowMonth = Number(tempTime.getMonth()) + 1;
+    const nowDay = tempTime.getDate();
+    const nowHour = tempTime.getHours();
+    const nowMinute = tempTime.getMinutes();
+    const nowTime =
+      nowYear + "_" + nowMonth + "_" + nowDay + "_" + nowHour + "_" + nowMinute; // 현제시간
 
     for (let i = 0; i < 15; i++) {
       let vel: any = [];
@@ -64,6 +72,7 @@ export default async function handler(
                 parkingFree,
                 limitYn,
                 limitDetail,
+                crTime: nowTime,
               };
               vel.push(newAllChag);
             });

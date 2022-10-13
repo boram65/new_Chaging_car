@@ -5,11 +5,12 @@ import { platform } from "os";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 import Map from "../components/Map";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { json } from "stream/consumers";
 import { allChaging } from "@prisma/client";
 import List from "../components/List";
 import Loading from "../components/Loading";
+import DBupDate from "../components/DBupDate";
 
 const Home: NextPage = () => {
   const [lat, setLat] = useState([36.8002]);
@@ -376,6 +377,7 @@ const Home: NextPage = () => {
 
   return !loading ? (
     <div>
+      <DBupDate />
       <Layout />
       <div className=" mt-10">
         <select className="w-40 h-8 bg-gray-100 ml-5 mb-1" onChange={시도선택}>
@@ -404,8 +406,11 @@ const Home: NextPage = () => {
           검색
         </button>
       </div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 flex">
-        <div id="map" className="w-4/6   ml-5 bg-white rounded-2xl shadow-xl">
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 mx-5 py-5 h-[30rem] flex justify-center rounded-2xl">
+        <div
+          id="map"
+          className="w-10/12 h-full my-0 bg-white rounded-2xl shadow-xl"
+        >
           <Map
             latitude={ready === false ? lat : llat}
             longitude={ready === false ? lon : llng}

@@ -107,8 +107,11 @@ const Auto: NextPage = () => {
     <div>
       <Layout />
       <div className="mt-24"></div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5">
-        <div id="map" className="w-4/6 ml-5 bg-white rounded-2xl shadow-xl">
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 h-[30rem] flex justify-center">
+        <div
+          id="map"
+          className="w-10/12 h-full my-0 bg-white rounded-2xl shadow-xl"
+        >
           <Map mylat={Lat} mylng={Lon} latitude={llat} longitude={llng} />
         </div>
       </div>

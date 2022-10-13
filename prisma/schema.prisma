@@ -67,7 +67,8 @@ datasource db {
 // }
 
 model allChaging {
-  id String @id @default(uuid()) @map("_id")
+  id       String   @id @default(uuid()) @map("_id")
+  createAt DateTime @default(now())
 
   statNm      String //이름
   statId      String //충전소 아이디
@@ -86,4 +87,5 @@ model allChaging {
   parkingFree String //무료 주차 여부
   limitYn     String //이용자 제한
   limitDetail String? @default("제한 없음") //이용자 제한 사유
+  crTime      String //만든 시간 저장
 }

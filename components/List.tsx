@@ -194,6 +194,10 @@ const stat = (ele: String) => {
 };
 
 const date = (ele: String) => {
+  if (ele === "") {
+    return "정보 없음";
+  }
+
   const year = ele.substring(0, 4);
   const month = ele.substring(4, 6);
   const day = ele.substring(6, 8);

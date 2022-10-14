@@ -245,13 +245,16 @@ export default function MyList() {
   };
 
   return (
-    <div className="w-11/12 bg-gradient-to-tr bg-sky-300 from-indigo-200 transition rounded-xl">
+    <div className="w-11/12 ">
       <button className="absolute right-5 text-2xl" onClick={즐찾새로고침}>
         🍥
       </button>
       <div>
         {chgerList.map((ele: any, idx: any) => (
-          <div key={idx} className="w-full py-2">
+          <div
+            key={idx}
+            className="w-full py-2 my-2 bg-gradient-to-tr bg-sky-300 from-indigo-200 transition rounded-xl"
+          >
             <div className="flex justify-center text-xl font-bold items-center">
               {ele.userStatNm}
             </div>

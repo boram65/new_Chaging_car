@@ -100,7 +100,7 @@ model user {
 model userChger {
   id     String  @id @default(uuid()) @map("_id")
   user   user?   @relation(fields: [userId], references: [id])
-  userId String? @unique
+  userId String?
 
   userStatNm    String?
   userStatId    String?

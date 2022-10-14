@@ -385,7 +385,10 @@ const Home: NextPage = () => {
       <DBupDate />
       <Layout logOff={false} />
       <div className=" mt-10">
-        <select className="w-40 h-8 bg-gray-100 ml-5 mb-1" onChange={시도선택}>
+        <select
+          className="w-40 h-8 bg-gray-100 ml-14 mb-1 shadow-xl"
+          onChange={시도선택}
+        >
           <option>시,도</option>
           {sido.map((e, idx) => (
             <option key={idx} value={e.code}>
@@ -394,7 +397,7 @@ const Home: NextPage = () => {
           ))}
         </select>
         <select
-          className="w-40 h-8 bg-gray-100 ml-5 mb-1"
+          className="w-40 h-8 bg-gray-100 ml-5 mb-1 shadow-xl"
           onChange={지역코드반환}
         >
           <option>시,군,구</option>
@@ -405,13 +408,13 @@ const Home: NextPage = () => {
           ))}
         </select>
         <button
-          className="ml-8 rounded-lg bg-lime-300 w-28 h-8"
+          className="ml-8 rounded-lg bg-gradient-to-tr bg-sky-300 from-indigo-300 w-28 h-8 shadow-xl "
           onClick={지역코드req}
         >
           검색
         </button>
       </div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 py-5 h-[30rem] flex justify-center">
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 py-5 h-[30rem] flex justify-center mt-5">
         <div
           id="map"
           className="w-7/12 h-full my-0 bg-white rounded-2xl shadow-xl"

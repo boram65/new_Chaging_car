@@ -238,16 +238,43 @@ export default function MyList() {
       .then(json => {
         console.log(json);
         setChgerList(json.userChagData);
-      })
-      .then(() => {
-        console.log(chgerList);
       });
+  };
+
+  const 리스트삭제 = (
+    userId: String,
+    userStatId: String,
+    userChgerId: String
+  ) => {
+    const deletData = { userId, userStatId, userChgerId };
+    fetch("api/user/listDelet", {
+      method: "POST",
+      body: JSON.stringify(deletData),
+    }).then(() => {
+      즐찾새로고침();
+    });
   };
 
   return (
     <div className="w-11/12 ">
-      <button className="absolute right-5 text-2xl" onClick={즐찾새로고침}>
-        🍥
+      <button
+        className="absolute right-6 text-2xl rounded-full "
+        onClick={즐찾새로고침}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="w-8 h-8 hover:origin-center hover:rotate-90"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+          />
+        </svg>
       </button>
       <div>
         {chgerList.map((ele: any, idx: any) => (
@@ -255,6 +282,14 @@ export default function MyList() {
             key={idx}
             className="w-full py-2 my-2 bg-gradient-to-tr bg-sky-300 from-indigo-200 transition rounded-xl"
           >
+            <button
+              className="absolute right-20"
+              onClick={() =>
+                리스트삭제(ele.userId, ele.userStatId, ele.userChgerId)
+              }
+            >
+              ❌
+            </button>
             <div className="flex justify-center text-xl font-bold items-center">
               {ele.userStatNm}
             </div>

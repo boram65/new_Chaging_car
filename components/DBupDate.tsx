@@ -24,6 +24,7 @@ const DBupDate: NextPage = () => {
     const nowTime = [nowYear, nowMonth, nowDay, nowHour, nowMinute];
 
     setNowTime(nowTime);
+    console.log("지금시간" + nowTime);
   };
 
   //DB에서 가져온 시간을 30분 추가 시키는 함수 추가된 30분은 time 변수에 들어감
@@ -58,6 +59,7 @@ const DBupDate: NextPage = () => {
       }
     }
     const DBtime30 = [NumYear, NumMonth, NumDay, NumHour, NumMinute];
+    console.log("DB시간" + DBtime30);
     setTime(DBtime30);
   };
 

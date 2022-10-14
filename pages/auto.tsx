@@ -116,14 +116,6 @@ const Auto: NextPage = () => {
       <Layout logOff={false} />
       <div className="mt-24"></div>
       <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 py-5 h-[30rem] flex justify-center">
-        {/* {status == "authenticated" ? (
-          <div
-            id="map"
-            className="w-7/12 h-full my-0 bg-white rounded-2xl shadow-xl"
-          >
-            <Map mylat={Lat} mylng={Lon} latitude={llat} longitude={llng} />
-          </div>
-        ) : ( */}
         <div
           id="map"
           className="w-7/12 h-full my-0 bg-white rounded-2xl shadow-xl"
@@ -133,7 +125,6 @@ const Auto: NextPage = () => {
         <div className="w-4/12 ml-5">
           {status == "authenticated" ? <MyList /> : null}
         </div>
-        {/* )} */}
       </div>
       <div className="flex justify-center">{리스트출력()}</div>
     </div>

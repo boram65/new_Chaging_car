@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 import DBupDate from "../components/DBupDate";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import MyList from "../components/MyList";
 
 const Home: NextPage = () => {
   const [lat, setLat] = useState([36.8002]);
@@ -23,6 +24,7 @@ const Home: NextPage = () => {
   const [llng, setllng] = useState<Number[]>([]); //주변 충전소의 죄표
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { data: session, status } = useSession();
   const [sido, setSido] = useState([
     { name: "서울특별시", code: "11" },
     { name: "부산광역시", code: "26" },
@@ -42,6 +44,7 @@ const Home: NextPage = () => {
     { name: "경상남도", code: "48" },
     { name: "제주특별자치도", code: "50" },
   ]);
+
   const [sigungu, setSigungu] = useState([
     { name: "시도를 선택하세요", code: "00000" },
   ]);
@@ -408,15 +411,18 @@ const Home: NextPage = () => {
           검색
         </button>
       </div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 h-[30rem] flex justify-center">
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 py-5 h-[30rem] flex justify-center">
         <div
           id="map"
-          className="w-10/12 h-full my-0 bg-white rounded-2xl shadow-xl"
+          className="w-7/12 h-full my-0 bg-white rounded-2xl shadow-xl"
         >
           <Map
             latitude={ready === false ? lat : llat}
             longitude={ready === false ? lon : llng}
           />
+        </div>
+        <div className="w-4/12 ml-5">
+          {status == "authenticated" ? <MyList /> : null}
         </div>
       </div>
       <div>{리스트출력()}</div>

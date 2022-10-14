@@ -107,7 +107,7 @@ const Auto: NextPage = () => {
   ) : (
     <div>
       <DBupDate />
-      <Layout />
+      <Layout logOff={false} />
       <div className="mt-24"></div>
       <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 h-[30rem] flex justify-center">
         <div

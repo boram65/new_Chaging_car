@@ -3,17 +3,21 @@ import Head from "next/head";
 import Image from "next/image";
 import { platform } from "os";
 import styles from "../styles/Home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Logo from "./Logo";
+import googleImg from "../img/google.png";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { json } from "stream/consumers";
 
 interface LayoutProps {
-  title: String;
+  title?: String;
+  logOff?: boolean;
 }
 
-export default function Layout() {
-  const [lat, setLat] = useState(36.8002);
-  const [lon, setLon] = useState(127.075);
+export default function Layout(logOff: LayoutProps) {
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
 
   return (
     <div>
@@ -66,26 +70,28 @@ export default function Layout() {
           </Link>
         </div>
         {/* 로그인 */}
-        <div className="flex float-right mr-5 mt-5">
-          <div>
-            <div>
-              <input
-                type={"email"}
-                placeholder=" e-mail"
-                className="bg-white border mr-2"
-              ></input>
-            </div>
-            <div>
-              <input
-                type={"password"}
-                placeholder=" password"
-                className="bg-white border mr-2"
-              ></input>
-            </div>
+        {logOff.logOff === true ? null : (
+          <div className="flex float-right mr-5 mt-5">
+            <button
+              className="w-20 h-14 bg-white border mr-2"
+              onClick={e => {
+                e.preventDefault();
+                signIn("google");
+              }}
+            >
+              <Image src={googleImg}></Image>
+            </button>
+            <button
+              className="w-20 h-14 bg-white border mr-2"
+              onClick={e => {
+                e.preventDefault();
+                signOut();
+              }}
+            >
+              로그아웃
+            </button>
           </div>
-          <button className="w-20 bg-white border mr-2">로그인</button>
-          <button className="w-20 bg-white border mr-2">회원가입</button>
-        </div>
+        )}
       </div>
     </div>
   );

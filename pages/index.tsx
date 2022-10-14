@@ -11,6 +11,8 @@ import { allChaging } from "@prisma/client";
 import List from "../components/List";
 import Loading from "../components/Loading";
 import DBupDate from "../components/DBupDate";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   const [lat, setLat] = useState([36.8002]);
@@ -378,7 +380,7 @@ const Home: NextPage = () => {
   return !loading ? (
     <div>
       <DBupDate />
-      <Layout />
+      <Layout logOff={false} />
       <div className=" mt-10">
         <select className="w-40 h-8 bg-gray-100 ml-5 mb-1" onChange={시도선택}>
           <option>시,도</option>

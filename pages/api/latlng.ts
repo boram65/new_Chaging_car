@@ -62,7 +62,6 @@ export default async function handler(
         ],
       },
     });
-    console.log(alldata.length);
 
     // console.log(alldata);
     // console.log("upLat : " + upLat);

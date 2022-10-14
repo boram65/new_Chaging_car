@@ -224,13 +224,26 @@ export default function Layout({ chaging }: ListProps) {
     return hour + " : " + minute + " : " + second;
   };
 
-  const 즐겨찾기 = (statId: String, chgerId: String) => {
+  const 즐겨찾기 = (
+    statNm: String,
+    statId: String,
+    chgerId: String,
+    chgerType: String,
+    addr: String,
+    stat: String
+  ) => {
     //authenticated   로그인 상테
     //unauthenticated   로그아웃 상태
-
-    console.log(session);
     if (status === "authenticated") {
-      const userdata = { email: session?.user?.email, statId, chgerId };
+      const userdata = {
+        email: session?.user?.email,
+        statNm,
+        statId,
+        chgerId,
+        chgerType,
+        addr,
+        stat,
+      };
       console.log("로그인됨");
       fetch(`api/user/findUser`, {
         method: "POST",
@@ -239,14 +252,10 @@ export default function Layout({ chaging }: ListProps) {
         .then(res => res.json())
         .then(json => {
           setMyListStat(json.stat);
+          alert(json.stat);
           //즐찾 알림 하기
-          즐찾경고창();
         });
     }
-  };
-
-  const 즐찾경고창 = () => {
-    return alert(myListStat);
   };
 
   return (
@@ -258,7 +267,14 @@ export default function Layout({ chaging }: ListProps) {
               <button
                 className="text-3xl w-12 h-12"
                 onClick={() => {
-                  즐겨찾기(e.statId, e.chgerId);
+                  즐겨찾기(
+                    e.statNm,
+                    e.statId,
+                    e.chgerId,
+                    e.chgerType,
+                    e.addr,
+                    e.stat
+                  );
                 }}
               >
                 ⭐️

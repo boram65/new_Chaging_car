@@ -19,10 +19,18 @@ export default async function handler(
     return;
   }
   try {
-    let stat: String = "";
+    let mgstat: String = "";
+    // userStatNm    String
+    // userStatId    String
+    // userChgerId   String
+    // userChgerType String
+    // userAddr      String
+    // userStat      String
 
     const userdata = JSON.parse(req.body);
-    const { email, statId, chgerId } = userdata;
+    const { email, statNm, statId, chgerId, chgerType, addr, stat } = userdata;
+    console.log(userdata);
+
     //유져 정보찾기
     const user = await client.user.findUnique({
       where: {
@@ -38,13 +46,17 @@ export default async function handler(
       });
       const userChger = await client.userChger.create({
         data: {
+          userStatNm: statNm,
           userId: newuser.id,
           userStatId: statId,
           userChgerId: chgerId,
+          userChgerType: chgerType,
+          userAddr: addr,
+          userStat: stat,
         },
       });
-      stat = "새로운 즐겨찾기 등록!";
-      console.log(stat);
+      mgstat = "새로운 즐겨찾기 등록!";
+      console.log(mgstat);
     }
     //유져가 있으면
     else {
@@ -56,18 +68,21 @@ export default async function handler(
           userChgerId: chgerId,
         },
       });
-
       //유져는 있지만 즐찻이 없으면
       if (userChagData === null) {
         const userChger = await client.userChger.create({
           data: {
+            userStatNm: statNm,
             userId: user.id,
             userStatId: statId,
             userChgerId: chgerId,
+            userChgerType: chgerType,
+            userAddr: addr,
+            userStat: stat,
           },
         });
-        stat = "새로운 즐겨찾기 등록!";
-        console.log(stat);
+        mgstat = "새로운 즐겨찾기 등록!";
+        console.log(mgstat);
       } else {
         const deleteUserChger = await client.userChger.deleteMany({
           where: {
@@ -76,12 +91,12 @@ export default async function handler(
             userChgerId: chgerId,
           },
         });
-        stat = "즐겨찾기 삭제!";
-        console.log(stat);
+        mgstat = "즐겨찾기 삭제!";
+        console.log(mgstat);
       }
     }
 
-    res.status(200).json({ OK: true, stat: stat });
+    res.status(200).json({ OK: true, stat: mgstat });
   } catch (err) {
     res.status(200).json({ OK: false });
   } finally {

@@ -11,6 +11,8 @@ import { allChaging } from "@prisma/client";
 import List from "../components/List";
 import Loading from "../components/Loading";
 import DBupDate from "../components/DBupDate";
+import { useSession } from "next-auth/react";
+import MyList from "../components/MyList";
 
 interface locationType {
   loaded: boolean;
@@ -38,6 +40,10 @@ const Auto: NextPage = () => {
     coordinates: { lat: 36.8002, lng: 127.075 },
   });
   const [ready, setReady] = useState(false);
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
+  //authenticated   로그인 상테
+  //unauthenticated   로그아웃 상태
 
   const post = () => {
     //자신의 위치정보를 보내 주변 충전소를 가져옴
@@ -109,13 +115,25 @@ const Auto: NextPage = () => {
       <DBupDate />
       <Layout logOff={false} />
       <div className="mt-24"></div>
-      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 mt-5 py-5 h-[30rem] flex justify-center">
+      <div className="bg-gradient-to-t bg-yellow-300 from-lime-300 py-5 h-[30rem] flex justify-center">
+        {/* {status == "authenticated" ? (
+          <div
+            id="map"
+            className="w-7/12 h-full my-0 bg-white rounded-2xl shadow-xl"
+          >
+            <Map mylat={Lat} mylng={Lon} latitude={llat} longitude={llng} />
+          </div>
+        ) : ( */}
         <div
           id="map"
-          className="w-10/12 h-full my-0 bg-white rounded-2xl shadow-xl"
+          className="w-7/12 h-full my-0 bg-white rounded-2xl shadow-xl"
         >
           <Map mylat={Lat} mylng={Lon} latitude={llat} longitude={llng} />
         </div>
+        <div className="w-4/12 ml-5">
+          {status == "authenticated" ? <MyList /> : null}
+        </div>
+        {/* )} */}
       </div>
       <div className="flex justify-center">{리스트출력()}</div>
     </div>

@@ -51,6 +51,7 @@ function Map({ mylat, mylng, latitude, longitude }: MapProps) {
         //마커 이미지
         var imageSrc =
           "https://cdn.icon-icons.com/icons2/2102/PNG/512/battery_energy_charger_charging_electric_station_tesla_icon_129004.png";
+
         var imageSize = new window.kakao.maps.Size(30);
         var markerImage = new window.kakao.maps.MarkerImage(
           imageSrc,

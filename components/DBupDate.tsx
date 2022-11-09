@@ -8,6 +8,7 @@ import Map from "./Map";
 import { useState, useEffect } from "react";
 import { json } from "stream/consumers";
 import DBget from "./DBupDate";
+import Loading from "./Loading";
 
 const DBupDate: NextPage = () => {
   const [time, setTime] = useState<Number[]>([]);
@@ -93,13 +94,16 @@ const DBupDate: NextPage = () => {
 
   const updata = () => {
     fetch("api/allDBreset");
+
     console.log("업데이트 o");
+    return <Loading />;
   };
 
   useEffect(() => {
     fetch("api/getTime")
       .then(res => res.json())
       .then(json => {
+        console.log(json.DBtime);
         변환30분(json.DBtime);
         현제시간();
       })

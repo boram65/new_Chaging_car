@@ -25,17 +25,20 @@ const DBupDate: NextPage = () => {
     const nowTime = [nowYear, nowMonth, nowDay, nowHour, nowMinute];
 
     setNowTime(nowTime);
-    console.log("지금시간" + nowTime);
+    console.log("지금시간 : " + nowTime);
+    return nowTime;
   };
 
   //DB에서 가져온 시간을 30분 추가 시키는 함수 추가된 30분은 time 변수에 들어감
   const 변환30분 = (time: String) => {
-    let year = time.substring(0, 4);
-    let month = time.substring(5, 7);
-    let day = time.substring(8, 10);
-    let hour = time.substring(11, 13);
-    let minute = time.substring(14, 16);
+    let temp30 = time.split("_");
 
+    let year = temp30[0];
+    let month = temp30[1];
+    let day = temp30[2];
+    let hour = temp30[3];
+    let minute = temp30[4];
+    // console.log(year + "-" + month + "-" + day + "-" + hour + "-" + minute);
     //모든 날자 넘버형으로 바꾸고 30분 더하기
     let NumYear = parseInt(year?.toString());
     let NumMonth = parseInt(month?.toString());
@@ -60,8 +63,9 @@ const DBupDate: NextPage = () => {
       }
     }
     const DBtime30 = [NumYear, NumMonth, NumDay, NumHour, NumMinute];
-    console.log("DB시간" + DBtime30);
+    console.log("DB시간 : " + DBtime30);
     setTime(DBtime30);
+    return DBtime30;
   };
 
   const 시간비교 = (time: Number[], nowTime: Number[]) => {
@@ -96,18 +100,18 @@ const DBupDate: NextPage = () => {
     fetch("api/allDBreset");
 
     console.log("업데이트 o");
-    return <Loading />;
   };
 
   useEffect(() => {
     fetch("api/getTime")
       .then(res => res.json())
-      .then(json => {
-        console.log(json.DBtime);
-        변환30분(json.DBtime);
-        현제시간();
+      .then(json => 변환30분(json.DBtime))
+      .then(time => {
+        console.log(time);
+        return 현제시간();
       })
-      .then(() => {
+      .then(nowTime => {
+        console.log(nowTime);
         시간비교(time, nowTime);
       });
   }, []);

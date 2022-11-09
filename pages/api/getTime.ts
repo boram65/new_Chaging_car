@@ -16,7 +16,7 @@ export default async function handler(
   try {
     const standard = await client.allChaging.findFirst({
       where: {
-        statNm: "선문대학교",
+        statNm: "서울시청",
       },
     });
 

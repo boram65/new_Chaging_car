@@ -67,18 +67,23 @@ const DBupDate: NextPage = () => {
     console.log("시간 비교중...");
     //만약 년도가 작으면
     if (time[0] < nowTime[0]) {
+      console.log("년도 측정 걸림");
       updata();
       return;
     } else if (time[1] < nowTime[1]) {
+      console.log("월 측정 걸림");
       updata();
       return;
     } else if (time[2] < nowTime[2]) {
+      console.log("일 측정 걸림");
       updata();
       return;
     } else if (time[3] < nowTime[3]) {
+      console.log("시간 측정 걸림");
       updata();
       return;
     } else if (time[4] < nowTime[4]) {
+      console.log("분 측정 걸림");
       updata();
       return;
     } else {

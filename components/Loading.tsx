@@ -9,7 +9,7 @@ import { Dna } from "react-loader-spinner";
 
 export default function Loading() {
   return (
-    <div className="bg-gradient-to-t bg-lime-300 from-yellow-400 py-60">
+    <div className="bg-gradient-to-t bg-lime-300 from-yellow-400 py-80 h-[100vh]">
       <div className="flex justify-center items-center">
         <Dna
           visible={true}
